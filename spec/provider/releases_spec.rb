@@ -31,6 +31,7 @@ describe DPL::Provider::Releases do
     example "With API key" do
       api = double(:api)
       expect(::Octokit::Client).to receive(:new).with(:access_token => '0123445789qwertyuiop0123445789qwertyuiop').and_return(api)
+
       expect(provider.api).to eq(api)
     end
 
@@ -98,9 +99,7 @@ describe DPL::Provider::Releases do
       allow(provider).to receive(:slug).and_return("foo/bar")
       allow(provider).to receive(:get_tag).and_return("foo")
 
-      expect(Octokit).to receive(:api_endpoint=).with("https://api.github.com")
       expect(provider.context).to receive(:shell).with("git fetch --tags")
-      expect(provider).to receive(:log).with("Configuring API endpoint: https://api.github.com")
       expect(provider).to receive(:log).with("Deploying to repo: foo/bar")
       expect(provider).to receive(:log).with("Current tag is: foo")
 
@@ -112,7 +111,6 @@ describe DPL::Provider::Releases do
       allow(provider).to receive(:slug).and_return("foo/bar")
 
       expect(provider.context).not_to receive(:shell).with("git fetch --tags")
-      expect(provider).to receive(:log).with("Configuring API endpoint: https://api.github.com")
       expect(provider).to receive(:log).with("Deploying to repo: foo/bar")
       expect(provider).to receive(:log).with("Current tag is: bar")
 
@@ -142,6 +140,7 @@ describe DPL::Provider::Releases do
       allow(provider).to receive(:setup_auth)
       expect(provider.api).to receive(:scopes).and_return(["public_repo"])
       expect(provider.user).to receive(:name).and_return("foo")
+      expect(provider).to receive(:log).with("Configuring API endpoint: https://api.github.com")
       expect(provider).to receive(:log).with("Logged in as foo")
       provider.check_auth
     end
@@ -151,6 +150,7 @@ describe DPL::Provider::Releases do
       allow(provider).to receive(:user)
       allow(provider).to receive(:setup_auth)
       expect(provider.api).to receive(:scopes).exactly(2).times.and_return([])
+      expect(provider).to receive(:log).with("Configuring API endpoint: https://api.github.com")
       expect { provider.check_auth }.to raise_error(DPL::Error)
     end
   end

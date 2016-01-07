@@ -26,6 +26,8 @@ module DPL
       end
 
       def api
+        return @api if @api
+
         if options[:user] and options[:password]
           @api ||= Octokit::Client.new(:login => options[:user], :password => options[:password])
         else
@@ -60,11 +62,6 @@ module DPL
       end
 
       def check_app
-        log "Configuring API endpoint: #{api_endpoint}"
-        Octokit.configure do |c|
-          c.api_endpoint = api_endpoint
-        end
-
         log "Deploying to repo: #{slug}"
 
         context.shell 'git fetch --tags' if travis_tag.nil?
@@ -77,6 +74,7 @@ module DPL
 
       def check_auth
         setup_auth
+        setup_api
 
         unless api.scopes.include? 'public_repo' or api.scopes.include? 'repo'
           raise Error, "Dpl does not have permission to upload assets. Make sure your token contains the repo or public_repo scope."
@@ -136,6 +134,11 @@ module DPL
         else
           @api_endpoint = "https://api.github.com"
         end
+      end
+
+      def setup_api
+        log "Configuring API endpoint: #{api_endpoint}"
+        Octokit.api_endpoint = api_endpoint
       end
     end
   end
