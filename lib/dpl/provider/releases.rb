@@ -73,8 +73,8 @@ module DPL
       end
 
       def check_auth
-        setup_auth
         setup_api
+        setup_auth
 
         unless api.scopes.include? 'public_repo' or api.scopes.include? 'repo'
           raise Error, "Dpl does not have permission to upload assets. Make sure your token contains the repo or public_repo scope."
