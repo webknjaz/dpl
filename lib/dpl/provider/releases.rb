@@ -138,6 +138,12 @@ module DPL
 
       def setup_api
         log "Configuring API endpoint: #{api_endpoint}"
+        stack = Faraday::RackBuilder.new do |builder|
+          builder.response :logger
+          builder.use Octokit::Response::RaiseError
+          builder.adapter Faraday.default_adapter
+        end
+        Octokit.middleware = stack
         Octokit.api_endpoint = api_endpoint
       end
     end
