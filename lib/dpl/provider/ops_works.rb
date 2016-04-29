@@ -87,6 +87,7 @@ module DPL
         if !options[:instance_ids].nil?
           deployment_config[:instance_ids] = option(:instance_ids)
         end
+        log "Deployment options: #{deployment_config}"
         data = client.create_deployment(deployment_config)
         log "Deployment created: #{data[:deployment_id]}"
         return unless options[:wait_until_deployed]
