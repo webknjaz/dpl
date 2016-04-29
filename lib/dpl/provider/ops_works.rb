@@ -85,12 +85,8 @@ module DPL
           custom_json: custom_json.to_json
         }
         if !options[:instance_ids].nil?
-          deployment_config[:instance_ids] = option(:instance_ids)
+          deployment_config[:instance_ids] = Array(option(:instance_ids))
         end
-        log "options: #{options}"
-        log "fetching: #{options.fetch(:instance_ids)}"
-        log "option: #{option(:instance_ids)}"
-        log "Deployment options: #{deployment_config}"
         data = client.create_deployment(deployment_config)
         log "Deployment created: #{data[:deployment_id]}"
         return unless options[:wait_until_deployed]

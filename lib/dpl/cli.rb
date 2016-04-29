@@ -12,7 +12,6 @@ module DPL
 
     def initialize(*args)
       options = {}
-      puts "args: #{args}"
       args.flatten.each do |arg|
         next options.update(arg) if arg.is_a? Hash
         die("invalid option %p" % arg) unless match = OPTION_PATTERN.match(arg)
