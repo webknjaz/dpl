@@ -122,10 +122,8 @@ module DPL
 
       def deploy
         super
-      rescue AWS::Errors::ClientError => error
+      rescue Aws::OpsWorks::Errors::ServiceError => error
         raise Error, "Stopping Deploy, OpsWorks error: #{error.message}", error.backtrace
-      rescue AWS::Errors::ServerError => error
-        raise Error, "Stopping Deploy, OpsWorks server error: #{error.message}", error.backtrace
       end
     end
   end
