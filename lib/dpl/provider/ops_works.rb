@@ -3,15 +3,13 @@ require 'timeout'
 module DPL
   class Provider
     class OpsWorks < Provider
-      requires 'aws-sdk-v1'
+      requires 'aws-sdk'
       experimental 'AWS OpsWorks'
 
-      def api
-        @api ||= AWS::OpsWorks.new
-      end
+      DEFAULT_REGION = 'us-east-1'
 
       def client
-        @client ||= api.client
+        @client ||= Aws::OpsWorks::Client.new(region: region, credentials: credentials)
       end
 
       def needs_key?
@@ -30,9 +28,15 @@ module DPL
         options[:secret_access_key] || context.env['AWS_SECRET_ACCESS_KEY'] || raise(Error, "missing secret_access_key")
       end
 
-      def setup_auth
-        AWS.config(access_key_id: access_key_id, secret_access_key: secret_access_key)
+      def region
+        options[:region] || DEFAULT_REGION
       end
+
+      def setup_auth
+        @credentials ||= Aws::Credentials.new(access_key_id, secret_access_key)
+      end
+
+      alias credentials setup_auth
 
       def check_auth
         setup_auth
@@ -42,7 +46,7 @@ module DPL
       def custom_json
         options[:custom_json] || {
           deploy: {
-            ops_works_app[:shortname] => {
+            ops_works_app.shortname => {
               migrate: !!options[:migrate],
               scm: {
                 revision: current_sha
@@ -61,11 +65,11 @@ module DPL
       end
 
       def fetch_ops_works_app
-        data = client.describe_apps(app_ids: [option(:app_id)])
-        unless data[:apps] && data[:apps].count == 1
+        data = client.describe_apps(app_ids: [option(:app_id)]).apps
+        unless data.apps && data.apps.count == 1
           raise Error, "App #{option(:app_id)} not found.", error.backtrace
         end
-        data[:apps].first
+        data.apps.first
       end
 
       def push_app
@@ -78,7 +82,7 @@ module DPL
 
       def create_deployment
         deployment_config = {
-          stack_id: ops_works_app[:stack_id],
+          stack_id: ops_works_app.stack_id,
           app_id: option(:app_id),
           command: {name: 'deploy'},
           comment: travis_deploy_comment,
