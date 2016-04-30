@@ -65,7 +65,7 @@ module DPL
       end
 
       def fetch_ops_works_app
-        data = client.describe_apps(app_ids: [option(:app_id)]).apps
+        data = client.describe_apps(app_ids: [option(:app_id)])
         unless data.apps && data.apps.count == 1
           raise Error, "App #{option(:app_id)} not found.", error.backtrace
         end
