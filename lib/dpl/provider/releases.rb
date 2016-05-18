@@ -99,6 +99,8 @@ module DPL
           release_url = api.create_release(slug, get_tag, options.merge({:draft => true})).rels[:self].href
         end
 
+        log "Releease URL: #{release_url}"
+
         files.each do |file|
           existing_url = nil
           filename = Pathname.new(file).basename.to_s
@@ -108,6 +110,7 @@ module DPL
             end
           end
           if !existing_url
+            log "Uploading #{file}"
             upload_file(file, filename, release_url)
           elsif existing_url && options[:overwrite]
             log "#{filename} already exists, overwriting."
@@ -127,6 +130,7 @@ module DPL
           # Specify the default content type, as it is required by GitHub
           content_type = "application/octet-stream"
         end
+        log "uploading asset: file=#{file} filename=#{filename} content_type=#{content_type}"
         api.upload_asset(release_url, file, {:name => filename, :content_type => content_type})
       end
     end
