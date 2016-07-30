@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'json', '1.8.1'
   s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'tins', '~> 1.6.0'
 
   # prereleases from Travis CI
   if ENV['CI']
