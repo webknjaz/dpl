@@ -59,7 +59,7 @@ end
 
 group :elastic_beanstalk do
   gem 'rubyzip', '~> 1.1'
-  gem 'aws-sdk-v1'
+  gem 'aws-sdk', '>= 2.0.18.pre'
 end
 
 group :bitballoon do

@@ -5,7 +5,7 @@ module DPL
     class ElasticBeanstalk < Provider
       experimental 'AWS Elastic Beanstalk'
 
-      requires 'aws-sdk-v1'
+      requires 'aws-sdk', '~> 2'
       requires 'rubyzip', :load => 'zip'
 
       DEFAULT_REGION = 'us-east-1'
@@ -23,7 +23,7 @@ module DPL
       end
 
       def check_auth
-        AWS.config(access_key_id: access_key_id, secret_access_key: secret_access_key, region: region)
+        Aws.config.update(access_key_id: access_key_id, secret_access_key: secret_access_key, region: region)
       end
 
       def check_app
@@ -87,11 +87,11 @@ module DPL
       end
 
       def s3
-        @s3 ||= AWS::S3.new
+        @s3 ||= Aws::S3::Resource.new(region: region)
       end
 
       def eb
-        @eb ||= AWS::ElasticBeanstalk.new.client
+        @eb ||= Aws::ElasticBeanstalk::Client.new(region: region)
       end
 
       def bucket_exists?
