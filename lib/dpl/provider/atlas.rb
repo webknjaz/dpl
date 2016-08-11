@@ -7,6 +7,7 @@ module DPL
       ATLAS_UPLOAD_KV_ARGS = %w(address).map(&:to_sym).freeze
       ATLAS_UPLOAD_KV_MULTI_ARGS = %w(exclude include metadata).map(&:to_sym).freeze
       ATLAS_UPLOAD_INSTALL_SCRIPT = <<-EOF.gsub(/^ {8}/, '').strip
+        set -x
         if ! command -v atlas-upload &>/dev/null ; then
           mkdir -p $HOME/bin $HOME/gopath/src
           export PATH="$HOME/bin:$PATH"
