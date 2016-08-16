@@ -17,7 +17,12 @@ module DPL
             chmod +x $HOME/bin/gimme
           fi
           echo $GOPATH
-          export GOPATH="$HOME/gopath:$GOPATH"
+          if [[ -z $GOROOT ]]; then
+            export GOPATH="$HOME/gopath"
+          else
+            export GOPATH="$HOME/gopath:$GOPATH"
+          fi
+          exit 1
           eval "$(gimme 1.6)" # &>/dev/null
           sleep 10
           git version
