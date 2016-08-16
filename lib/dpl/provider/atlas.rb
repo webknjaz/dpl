@@ -16,7 +16,7 @@ module DPL
             curl -sL -o $HOME/bin/gimme #{GIMME_URL}
             chmod +x $HOME/bin/gimme
           fi
-
+          echo $GOPATH
           export GOPATH="$HOME/gopath:$GOPATH"
           eval "$(gimme 1.6)" # &>/dev/null
           sleep 10
