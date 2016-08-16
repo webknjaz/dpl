@@ -21,6 +21,7 @@ module DPL
           eval "$(gimme 1.6)" &>/dev/null
           sleep 10
           git version
+          go version
           go get github.com/spf13/hugo
           exit 1
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
