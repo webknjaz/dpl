@@ -18,7 +18,7 @@ module DPL
           fi
 
           export GOPATH="$HOME/gopath:$GOPATH"
-          eval "$(gimme 1.4.2)" &>/dev/null
+          eval "$(gimme 1.6)" &>/dev/null
 
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
           pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
