@@ -26,6 +26,7 @@ module DPL
           sleep 10
           git version
           go version
+          git config --global url.git@github.com:.insteadOf https://github.com/
           go get github.com/spf13/hugo
           exit 1
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
