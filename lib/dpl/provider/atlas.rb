@@ -18,7 +18,7 @@ module DPL
           fi
 
           export GOPATH="$HOME/gopath:$GOPATH"
-          eval "$(gimme 1.6)" &>/dev/null
+          eval "$(gimme 1.6)" # &>/dev/null
           sleep 10
           git version
           go version
