@@ -17,7 +17,7 @@ module DPL
             chmod +x $HOME/bin/gimme
           fi
           echo $GOPATH
-          if [ -z $GOROOT ]; then
+          if [ -z $GOPATH ]; then
             export GOPATH="$HOME/gopath"
           else
             export GOPATH="$HOME/gopath:$GOPATH"
