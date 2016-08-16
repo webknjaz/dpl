@@ -22,7 +22,6 @@ module DPL
           else
             export GOPATH="$HOME/gopath:$GOPATH"
           fi
-          exit 1
           eval "$(gimme 1.6)" # &>/dev/null
           sleep 10
           git version
