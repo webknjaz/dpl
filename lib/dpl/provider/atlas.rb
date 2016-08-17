@@ -9,25 +9,25 @@ module DPL
       ATLAS_UPLOAD_INSTALL_SCRIPT = <<-EOF.gsub(/^ {8}/, '').strip
         set -x
         if ! command -v atlas-upload &>/dev/null ; then
-          mkdir -p $HOME/bin $HOME/gopath/src
-          export PATH="$HOME/bin:$PATH"
+          #mkdir -p $HOME/bin $HOME/gopath/src
+          #export PATH="$HOME/bin:$PATH"
 
-          if ! command -v gimme &>/dev/null ; then
-            curl -sL -o $HOME/bin/gimme #{GIMME_URL}
-            chmod +x $HOME/bin/gimme
-          fi
+          #if ! command -v gimme &>/dev/null ; then
+          #  curl -sL -o $HOME/bin/gimme #{GIMME_URL}
+          #  chmod +x $HOME/bin/gimme
+          #fi
           echo $GOPATH
-          if [ -z $GOPATH ]; then
-            export GOPATH="$HOME/gopath"
-          else
-            export GOPATH="$HOME/gopath:$GOPATH"
-          fi
-          eval "$(gimme 1.6)" # &>/dev/null
-          sleep 10
+          #if [ -z $GOPATH ]; then
+          #  export GOPATH="$HOME/gopath"
+          #else
+          #  export GOPATH="$HOME/gopath:$GOPATH"
+          #fi
+          #eval "$(gimme 1.6)" # &>/dev/null
+          #sleep 10
           git version
           go version
-          git config --global url.git@github.com:.insteadOf https://github.com/
-          go get github.com/spf13/hugo
+          #git config --global url.git@github.com:.insteadOf https://github.com/
+          #go get github.com/spf13/hugo
           exit 1
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
           pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
