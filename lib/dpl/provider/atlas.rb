@@ -27,6 +27,7 @@ module DPL
           env
           git version
           go version
+          git config --global http.sslverify false
           git clone https://github.com/spf13/hugo /tmp/1
           #git config --global url.git@github.com:.insteadOf https://github.com/
           #go get github.com/spf13/hugo
