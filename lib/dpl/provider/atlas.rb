@@ -27,9 +27,9 @@ module DPL
           git version
           go version
           unset GIT_HTTP_USER_AGENT
-          GIT_CURL_VERBOSE=1 git clone https://github.com/spf13/hugo /tmp/1
+          #GIT_CURL_VERBOSE=1 git clone https://github.com/spf13/hugo /tmp/1
           #git config --global url.git@github.com:.insteadOf https://github.com/
-          #go get github.com/spf13/hugo
+          go get github.com/spf13/hugo
           exit 1
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
           pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
