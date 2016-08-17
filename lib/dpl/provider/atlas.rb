@@ -16,7 +16,7 @@ module DPL
           #  curl -sL -o $HOME/bin/gimme #{GIMME_URL}
           #  chmod +x $HOME/bin/gimme
           #fi
-          echo $GOPATH
+          #echo $GOPATH
           #if [ -z $GOPATH ]; then
           #  export GOPATH="$HOME/gopath"
           #else
@@ -26,6 +26,7 @@ module DPL
           #sleep 10
           git version
           go version
+          git clone https://github.com/spf13/hugo /tmp/1
           #git config --global url.git@github.com:.insteadOf https://github.com/
           #go get github.com/spf13/hugo
           exit 1
