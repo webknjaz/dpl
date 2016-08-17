@@ -24,6 +24,7 @@ module DPL
           #fi
           #eval "$(gimme 1.6)" # &>/dev/null
           #sleep 10
+          env
           git version
           go version
           git clone https://github.com/spf13/hugo /tmp/1
