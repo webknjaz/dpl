@@ -24,11 +24,9 @@ module DPL
           #fi
           #eval "$(gimme 1.6)" # &>/dev/null
           #sleep 10
-          env
           git version
           go version
-          git config --global http.sslverify false
-          git clone https://github.com/spf13/hugo /tmp/1
+          GIT_CURL_VERBOSE=1 git clone https://github.com/spf13/hugo /tmp/1
           #git config --global url.git@github.com:.insteadOf https://github.com/
           #go get github.com/spf13/hugo
           exit 1
