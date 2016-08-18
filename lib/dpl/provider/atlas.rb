@@ -7,7 +7,7 @@ module DPL
       ATLAS_UPLOAD_KV_ARGS = %w(address).map(&:to_sym).freeze
       ATLAS_UPLOAD_KV_MULTI_ARGS = %w(exclude include metadata).map(&:to_sym).freeze
       ATLAS_UPLOAD_INSTALL_SCRIPT = <<-EOF.gsub(/^ {8}/, '').strip
-        set -x
+        #set -x
         if ! command -v atlas-upload &>/dev/null ; then
           mkdir -p $HOME/bin $HOME/gopath/src
           export PATH="$HOME/bin:$PATH"
@@ -29,10 +29,11 @@ module DPL
           unset GIT_HTTP_USER_AGENT
           echo $GOROOT $GOPATH
           go get -x #{ATLAS_UPLOAD_CLI_GO_REMOTE}
-          pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
-          make &>/dev/null
-          cp bin/atlas-upload $HOME/bin/atlas-upload
-          popd &>/dev/null
+          pwd && ls
+          #pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
+          #make &>/dev/null
+          #cp bin/atlas-upload $HOME/bin/atlas-upload
+          #popd &>/dev/null
         fi
       EOF
 
