@@ -28,8 +28,9 @@ module DPL
           go version
           unset GIT_HTTP_USER_AGENT
           echo $GOROOT $GOPATH
-          go get -x #{ATLAS_UPLOAD_CLI_GO_REMOTE}
+          go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
           pushd /tmp
+          /home/travis/gopath/bin/atlas-upload-cli help
           #pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
           #make &>/dev/null
           #cp bin/atlas-upload $HOME/bin/atlas-upload
