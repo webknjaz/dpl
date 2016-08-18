@@ -12,10 +12,10 @@ module DPL
           mkdir -p $HOME/bin $HOME/gopath/src
           export PATH="$HOME/bin:$PATH"
 
-          #if ! command -v gimme &>/dev/null ; then
-          #  curl -sL -o $HOME/bin/gimme #{GIMME_URL}
-          #  chmod +x $HOME/bin/gimme
-          #fi
+          if ! command -v gimme &>/dev/null ; then
+            curl -sL -o $HOME/bin/gimme #{GIMME_URL}
+            chmod +x $HOME/bin/gimme
+          fi
 
           if [ -z $GOPATH ]; then
             export GOPATH="$HOME/gopath"
