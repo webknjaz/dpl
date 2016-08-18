@@ -22,7 +22,7 @@ module DPL
           else
             export GOPATH="$HOME/gopath:$GOPATH"
           fi
-          gimme 1.6
+          eval "$(gimme 1.6)"
 
           go version
           unset GIT_HTTP_USER_AGENT
