@@ -24,17 +24,12 @@ module DPL
           fi
           eval "$(gimme 1.6)" &>/dev/null
 
-          git version
           go version
           unset GIT_HTTP_USER_AGENT
           echo $GOROOT $GOPATH
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
           pushd /tmp
-          /home/travis/gopath/bin/atlas-upload-cli help
-          #pushd $HOME/gopath/src/#{ATLAS_UPLOAD_CLI_GO_REMOTE} &>/dev/null
-          #make &>/dev/null
-          #cp bin/atlas-upload $HOME/bin/atlas-upload
-          #popd &>/dev/null
+          cp /home/travis/gopath/bin/atlas-upload-cli $HOME/bin/atlas-upload
         fi
       EOF
 
