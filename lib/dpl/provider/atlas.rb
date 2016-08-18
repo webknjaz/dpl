@@ -12,10 +12,10 @@ module DPL
           mkdir -p $HOME/bin $HOME/gopath/src
           export PATH="$HOME/bin:$PATH"
 
-          if ! command -v gimme &>/dev/null ; then
-            curl -sL -o $HOME/bin/gimme #{GIMME_URL}
-            chmod +x $HOME/bin/gimme
-          fi
+          #if ! command -v gimme &>/dev/null ; then
+          #  curl -sL -o $HOME/bin/gimme #{GIMME_URL}
+          #  chmod +x $HOME/bin/gimme
+          #fi
 
           if [ -z $GOPATH ]; then
             export GOPATH="$HOME/gopath"
@@ -27,7 +27,6 @@ module DPL
           unset GIT_HTTP_USER_AGENT
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
           cp /home/travis/gopath/bin/atlas-upload-cli $HOME/bin/atlas-upload
-          atlas-upload
         fi
       EOF
 
