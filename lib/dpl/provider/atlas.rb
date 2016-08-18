@@ -22,13 +22,12 @@ module DPL
           else
             export GOPATH="$HOME/gopath:$GOPATH"
           fi
-          eval "$(gimme 1.6)" &>/dev/null
+          gimme 1.6
 
           go version
           unset GIT_HTTP_USER_AGENT
           echo $GOROOT $GOPATH
           go get #{ATLAS_UPLOAD_CLI_GO_REMOTE}
-          pushd /tmp
           cp /home/travis/gopath/bin/atlas-upload-cli $HOME/bin/atlas-upload
         fi
       EOF
