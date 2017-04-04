@@ -7,6 +7,7 @@ module DPL
         - repo [optional, for pushed to other repos]
         - github-token [required]
         - target-branch [optional, defaults to gh-pages]
+        - keep_history [don't overwrite history]
         - local-dir [optional, defaults to `pwd`]
         - fqdn [optional]
         - project-name [optional, defaults to fqdn or repo slug]
@@ -27,6 +28,7 @@ module DPL
 
         @gh_ref = "github.com/#{slug}.git"
         @target_branch = options[:target_branch] || 'gh-pages'
+        @keep_history = options[:keep_history] || 'true'
         @gh_token = option(:github_token)
 
         @gh_email = options[:email] || 'deploy@travis-ci.org'
@@ -49,15 +51,22 @@ module DPL
       end
 
       def github_deploy
-        context.shell 'rm -rf .git > /dev/null 2>&1'
         context.shell "touch \"deployed at `date` by #{@gh_name}\""
-        context.shell 'git init' or raise 'Could not create new git repo'
         context.shell "git config user.email '#{@gh_email}'"
         context.shell "git config user.name '#{@gh_name}'"
         context.shell "echo '#{@gh_fqdn}' > CNAME" if @gh_fqdn
-        context.shell 'git add .'
-        context.shell "git commit -m 'Deploy #{@project_name} to #{@gh_ref}:#{@target_branch}'"
-        context.shell "git push --force --quiet 'https://#{@gh_token}@#{@gh_ref}' master:#{@target_branch} > /dev/null 2>&1"
+
+        if @keep_history
+          context.shell 'git add .'
+          context.shell "git commit -m 'Deploy #{@project_name} to #{@gh_ref}:#{@target_branch}'"
+          context.shell "git push --quiet 'https://#{@gh_token}@#{@gh_ref}' master:#{@target_branch} > /dev/null 2>&1"
+        else
+          context.shell 'rm -rf .git > /dev/null 2>&1'
+          context.shell 'git init' or raise 'Could not create new git repo'
+          context.shell 'git add .'
+          context.shell "git commit -m 'Deploy #{@project_name} to #{@gh_ref}:#{@target_branch}'"
+          context.shell "git push --force --quiet 'https://#{@gh_token}@#{@gh_ref}' master:#{@target_branch} > /dev/null 2>&1"
+        end
       end
 
       def push_app
